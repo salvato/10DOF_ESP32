@@ -2,32 +2,30 @@
 #include <Wire.h>
 #include <esp_wifi.h>
 #include <PID_v1.h>
-
-#include "AsyncUDP.h"
+#include <AsyncUDP.h>
 
 #include "ADXL345.h"
 #include "ITG3200.h"
 #include "HMC5883L.h"
-
 #include "MadgwickAHRS.h"
+#include "MotorController_BST7960.h"
 
 // Pin used for I2C:
 // D21 SDA
 // D22 SCK
-
-#include "MotorController_BST7960.h"
 
 #define I2CFrequency     400000
 #define ACC_ADDR         ADXL345_ADDR_ALT_LOW  // SDO connected to GND
 #define ITG3200_DEF_ADDR ITG3200_ADDR_AD0_LOW  // AD0 connected to GND
 #define HMC5883L_ADDR    HMC5883L_Address      // FIXED
 
+// Pin used by the Motor Controller
 #define PWM1UP_PIN  12
 #define PWM1LOW_PIN 13
 #define PWM2UP_PIN  27
 #define PWM2LOW_PIN 14
 
-#define LED_BUILTIN 2
+#define LED_BUILTIN 2 // ESP32 On Board Led Pin
 
 
 uint16_t ahrsSamplingFrequency = 400; // Hz
@@ -89,9 +87,6 @@ float accValues[3];
 float gyroValues[3];
 float magValues[3];
 float q0, q1, q2, q3;
-
-
-int16_t value = 0;
 
 
 void
